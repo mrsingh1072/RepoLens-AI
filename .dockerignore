@@ -1,0 +1,19 @@
+.git
+**/__pycache__
+**/.pytest_cache
+**/*.pyc
+**/.env
+frontend/node_modules
+frontend/dist
+**/.cursor
+terminals/
+# Exclude root-level runtime-generated large data directories only
+/data/
+/repos/
+/clones/
+*.log
+*.tmp
+.venv
+venv/
+env/
+node_modules/
