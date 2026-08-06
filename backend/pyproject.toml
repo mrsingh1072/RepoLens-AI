@@ -1,0 +1,21 @@
+[project]
+name = "ai-swe-backend"
+version = "0.1.0"
+description = "FastAPI backend for the AI Software Engineer platform"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
