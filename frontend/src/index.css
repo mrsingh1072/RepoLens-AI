@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────
+   STRATA design tokens.
+
+   The metaphor: a codebase is a geological object — layers of warm rock.
+   Depth is luminance (deeper = darker). Light comes from above (top
+   highlights on raised surfaces). Heat (the ember accent) marks whatever
+   the system is doing *right now*.
+
+   Dark is the default; `.light` is warm paper. Hue stays warm (20–40°)
+   everywhere — never blue-gray.
+   ──────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    /* Strata (back → front) — deep zinc, matching the landing page. */
+    --background: 240 10% 3.9%;
+    --surface: 240 7% 5.5%;
+    --raised: 240 6% 9%;
+    --overlay: 240 6% 12%;
+
+    /* Hairlines — hairline-thin, reads as white/5 on zinc-950. */
+    --border: 240 6% 11%;
+    --border-strong: 240 5% 18%;
+    --input: 240 6% 11%;
+
+    /* Ink — zinc-50 / zinc-400 / zinc-500 */
+    --foreground: 240 6% 97%;
+    --text-2: 240 5% 65%;
+    --text-3: 240 4% 46%;
+
+    /* Ember — the single accent. Text on ember is dark ink, not white. */
+    --ember: 24 92% 58%;
+    --ember-bright: 28 96% 66%;
+    --on-ember: 20 50% 7%;
+
+    /* Status */
+    --moss: 150 30% 52%;
+    --gold: 44 85% 58%;
+    --rust: 8 68% 56%;
+
+    /* shadcn compatibility aliases */
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --primary: var(--ember);
+    --primary-foreground: var(--on-ember);
+    --secondary: var(--raised);
+    --secondary-foreground: var(--foreground);
+    --muted: var(--raised);
+    --muted-foreground: var(--text-2);
+    --accent: var(--ember);
+    --accent-foreground: var(--on-ember);
+    --destructive: var(--rust);
+    --destructive-foreground: 36 20% 93%;
+    --ring: 24 92% 58%;
+    --radius: 0.875rem;
+
+    color-scheme: dark;
+  }
+
+  .light {
+    --background: 40 30% 96.5%;
+    --surface: 0 0% 100%;
+    --raised: 40 25% 94%;
+    --overlay: 0 0% 100%;
+
+    --border: 30 12% 87%;
+    --border-strong: 28 12% 78%;
+    --input: 30 12% 87%;
+
+    --foreground: 24 20% 10%;
+    --text-2: 26 8% 40%;
+    --text-3: 26 6% 56%;
+
+    --ember: 22 88% 47%;
+    --ember-bright: 24 90% 54%;
+    --on-ember: 40 40% 98%;
+
+    --moss: 150 35% 36%;
+    --gold: 40 80% 40%;
+    --rust: 8 65% 46%;
+
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --primary: var(--ember);
+    --primary-foreground: var(--on-ember);
+    --secondary: var(--raised);
+    --secondary-foreground: var(--foreground);
+    --muted: var(--raised);
+    --muted-foreground: var(--text-2);
+    --accent: var(--ember);
+    --accent-foreground: var(--on-ember);
+    --destructive: var(--rust);
+    --destructive-foreground: 40 40% 98%;
+    --ring: 22 88% 47%;
+
+    color-scheme: light;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bedrock text-ink antialiased;
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Numbers never wobble while streaming/counting. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: hsl(var(--ember) / 0.28);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: hsl(var(--border-strong));
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--text-3));
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-bedrock;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Signature: mono overline label — the engineer's blueprint annotation. */
+  .overline-label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--text-3));
+  }
+
+  /* Stratum 1 surface: fill + hairline + top highlight (light from above). */
+  .stratum {
+    background-color: hsl(var(--surface));
+    border: 1px solid hsl(var(--border));
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.05),
+      0 1px 2px hsl(0 0% 0% / 0.4);
+  }
+  .light .stratum {
+    box-shadow: 0 1px 2px hsl(24 20% 10% / 0.06);
+  }
+
+  /* Ember spotlight host — set --spot-x/--spot-y in px from JS. */
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--spot-opacity, 0);
+    transition: opacity 0.35s ease;
+    background: radial-gradient(
+      320px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      hsl(var(--ember) / 0.07),
+      transparent 70%
+    );
+  }
+
+  /* Prose defaults for chat / markdown without @tailwindcss/typography. */
+  .strata-prose {
+    @apply text-[15px] leading-[1.7] text-ink;
+  }
+  .strata-prose p {
+    @apply my-3 first:mt-0 last:mb-0;
+  }
+  .strata-prose ul {
+    @apply my-3 list-disc space-y-1.5 pl-5;
+  }
+  .strata-prose ol {
+    @apply my-3 list-decimal space-y-1.5 pl-5;
+  }
+  .strata-prose h1,
+  .strata-prose h2,
+  .strata-prose h3,
+  .strata-prose h4 {
+    @apply mb-2 mt-5 font-semibold text-ink first:mt-0;
+  }
+  .strata-prose h1 {
+    @apply text-lg;
+  }
+  .strata-prose h2 {
+    @apply text-base;
+  }
+  .strata-prose h3,
+  .strata-prose h4 {
+    @apply text-[15px];
+  }
+  .strata-prose a {
+    @apply text-ember underline decoration-ember/40 underline-offset-2 hover:decoration-ember;
+  }
+  .strata-prose blockquote {
+    @apply my-3 border-l-2 border-ember/50 pl-4 text-ink-2;
+  }
+  .strata-prose table {
+    @apply my-3 w-full border-collapse text-sm;
+  }
+  .strata-prose th {
+    @apply border-b border-edge-strong px-3 py-1.5 text-left font-medium;
+  }
+  .strata-prose td {
+    @apply border-b border-edge px-3 py-1.5;
+  }
+  .strata-prose hr {
+    @apply my-5 border-edge;
+  }
+  .strata-prose strong {
+    @apply font-semibold text-ink;
+  }
+}
